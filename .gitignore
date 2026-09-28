@@ -1,0 +1,15 @@
+# yours, never committed
+profile.yaml
+resume/masterdoc.yaml
+resume/jobs/*
+!resume/jobs/.gitkeep
+secrets/*
+!secrets/.gitkeep
+state/
+*.log
+launchd.*.log
+
+__pycache__/
+.pytest_cache/
+.DS_Store
+.playwright-mcp/

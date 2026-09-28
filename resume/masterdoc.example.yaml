@@ -1,0 +1,137 @@
+# Master record of everything the candidate has done. Copy to masterdoc.yaml (gitignored) and fill in.
+#
+# facts   = atomic, verifiable, phrasing-free. The truth. Never written on a resume verbatim.
+# bullets = phrasings OF facts. approved:true means the candidate signed off — reuse verbatim.
+#           rejected:true means they killed it — never regenerate.
+#
+# Every bullet cites source_facts. The tailor-resume skill labels anything it writes beyond the
+# facts as inferred/stretch so the candidate can prune. Run validate_masterdoc.py after editing:
+# a duplicated YAML key silently deletes data, and the validator is what catches it.
+
+profile:
+  name: Alex Rivera
+  email: alex.rivera@example.edu
+  phone: "(555) 555-5555"
+  location: City, ST
+  links:
+    linkedin: linkedin.com/in/alexrivera
+    github: github.com/alexrivera
+
+education:
+  school: State University
+  location: City, ST
+  degrees:
+    - B.S. Computer Science
+  start: 2025-08
+  graduation:
+    default: 2028-05            # what most postings should see
+    sophomore_framing: 2029-05  # ONLY when a posting explicitly targets sophomores / second-years
+  coursework:
+    completed: [CS 101, CS 201, Math 220, Stat 200]
+    in_progress: [CS 250, CS 270]
+  coursework_labels:            # picked per posting type by the skill
+    swe: "Data Structures, Algorithms, Linear Algebra"
+    ml: "Probability & Statistics, Linear Algebra, Intro to Machine Learning"
+    pm: "Data Structures, Probability & Statistics, Microeconomics"
+
+experiences:
+  - id: finpay
+    org: FinPay
+    org_note: Series A fintech, 40 people
+    title: Software Engineer Intern
+    title_alts:                 # alternate titles the skill may use when the posting leans that way
+      swe: Software Engineer Intern
+      data: Data Engineering Intern
+    location: City, ST
+    start: 2026-06
+    end: 2026-08
+    status: complete
+    tags: [swe, backend, data]
+    facts:
+      - f0: built a payments reconciliation service in Python that matched bank settlements to ledger entries
+      - f1: service processed roughly 40K transactions per day
+      - f2: reduced unmatched transactions from 3.1% to 0.4% over the summer
+      - f3: wrote the Postgres schema and migrations for the service
+      - f4: presented the design to the 6-person platform team and the CTO
+    detail_gaps:
+      - "What was the on-call / incident story, if any? One concrete failure handled well is a strong bullet."
+    bullets:
+      - id: finpay-1
+        text: "Built a Python payments-reconciliation service matching ~40K daily bank settlements to ledger entries, cutting unmatched transactions from 3.1% to 0.4%."
+        tags: [swe, backend, data]
+        source_facts: [f0, f1, f2]
+        approved: true
+      - id: finpay-2
+        text: "Designed the PostgreSQL schema and migrations for the service and presented the design to the platform team and CTO."
+        tags: [swe, backend, communication]
+        source_facts: [f3, f4]
+
+  - id: campusmarket
+    org: Campus Market
+    org_note: student-run marketplace app
+    title: Product Lead
+    location: City, ST
+    start: 2025-09
+    end: 2026-05
+    status: complete
+    tags: [pm, product, swe]
+    facts:
+      - f0: led a 4-person team building a campus marketplace web app (React, TypeScript, Supabase)
+      - f1: ran 25 user interviews before building
+      - f2: launched to 600 students in the first month
+      - f3: personally built the listing search and messaging features
+    bullets:
+      - id: cm-1
+        text: "Led a 4-person team to build and launch a campus marketplace app (React/TypeScript, Supabase) to 600 students in its first month, after 25 user interviews shaped the scope."
+        tags: [pm, product, swe]
+        source_facts: [f0, f1, f2]
+        approved: true
+
+projects:
+  - id: orgdata
+    name: Club Analytics
+    tagline: SQL + dbt reporting for a 300-member student org
+    start: 2026-01
+    end: 2026-04
+    status: shipped
+    tags: [data, sql, analytics]
+    stack: [PostgreSQL, dbt, Metabase, Python]
+    facts:
+      - f0: modeled dues, attendance, and event data in dbt on Postgres
+      - f1: built Metabase dashboards the board used to plan the semester budget
+      - f2: found that 22% of dues were being collected late and proposed a reminder flow that fixed most of it
+    bullets:
+      - id: orgdata-1
+        text: "Modeled dues, attendance, and event data with dbt on PostgreSQL and shipped Metabase dashboards the board used to plan the semester budget."
+        tags: [data, sql, analytics]
+        source_facts: [f0, f1]
+
+leadership:
+  - id: investclub
+    org: State University Investment Club
+    title: Analyst
+    location: City, ST
+    start: 2025-09
+    end: present
+    tags: [finance, investing, analytics]
+    facts:
+      - f0: pitched two long equity ideas to a 30-member club; one was added to the paper portfolio
+    bullets:
+      - id: ic-1
+        text: "Pitched two long equity ideas to a 30-member investment club; one was added to the paper portfolio."
+        tags: [finance, investing]
+        source_facts: [f0]
+
+skills:
+  languages: [Python, TypeScript, SQL, Java]
+  frameworks: [React, Next.js, FastAPI]
+  data_ml: [dbt, pandas, scikit-learn]
+  infra: [PostgreSQL, Supabase, AWS, GitHub Actions, Git]
+  analysis_presentation: [Google Sheets, MS Excel, Google Slides]
+  # Skills line is reordered per posting to front-load whatever it names.
+
+awards: []
+languages_spoken: [English (native), Spanish (conversational)]
+interests: "Climbing; chess; campus radio"
+
+rejected_bullets: []

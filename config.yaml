@@ -1,0 +1,31 @@
+# Shared pipeline knobs (committed). Personal settings go in profile.yaml (gitignored).
+# profile.yaml keys override anything here.
+
+listings_url: https://raw.githubusercontent.com/SimplifyJobs/Summer2027-Internships/dev/.github/scripts/listings.json
+min_listing_rows: 1000          # abort if the feed parses to fewer rows (feed broken)
+
+# Categories in the SimplifyJobs feed: Software, AI/ML/Data, Product, Hardware, Quant
+categories: [Software, AI/ML/Data, Product]
+title_exclude_regex: "\\b(MS|M\\.S\\.|PhD|Ph\\.D\\.|MBA|Master'?s|Graduate)\\b"
+window_hours_min: 24            # always look back at least this far
+window_hours_max: 72            # never look back further than this, even after a failed night
+
+max_jobs: 10                    # ranking target; the model may return 60%-140% of this by quality
+close_cuts: 6                   # near-misses reported so you can tune the ranking rules
+
+resume_dir: resume              # holds masterdoc.yaml, jobs/, the scorer and renderer
+desktop_folder: ~/Desktop/Internship Resumes   # a dated folder of each night's PDFs
+sa_key: secrets/sa.json         # Google service-account key (only if you use the Sheet tracker)
+
+# Ranking hints. Tier 1 = name-brand / hardest to get, always worth a shot. Tier 2 = strong.
+# Edit freely; substring match, case-insensitive.
+tier1: [Google, Apple, Meta, Microsoft, Amazon, Netflix, Nvidia, OpenAI, Anthropic, Stripe, Databricks,
+        Jane Street, Citadel, Two Sigma, Hudson River Trading, Palantir, Airbnb, Uber, Waymo, SpaceX, Tesla,
+        Snowflake, Figma, Notion, Ramp, Scale AI, Roblox, Coinbase, Robinhood, DoorDash, Lyft, Pinterest,
+        Salesforce, Adobe, Intuit, LinkedIn, Bloomberg, Goldman Sachs, Morgan Stanley, JPMorgan, Capital One,
+        Cloudflare, Datadog, MongoDB, Atlassian, Dropbox, Plaid, Brex, Rippling, Anduril, Rivian, Epic Games,
+        Optiver, IMC, Jump Trading, DRW, Susquehanna, SIG, Akuna, Five Rings, Tower Research, Point72, D. E. Shaw]
+tier2: [ByteDance, TikTok, Oracle, IBM, Cisco, Intel, AMD, Qualcomm, Samsung, Sony, Electronic Arts,
+        Riot Games, Nike, Disney, Warner Bros, Walmart, Target, Home Depot, Costco, Chime, Affirm,
+        Instacart, Reddit, Discord, Twitch, Zoom, Slack, Box, Twilio, Okta, HubSpot, Squarespace, Wayfair,
+        Chewy, Zillow, Redfin, Nextdoor, Grammarly, Duolingo, Asana, Airtable, Vercel, Supabase, Retool]

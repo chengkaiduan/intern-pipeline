@@ -1,0 +1,7 @@
+pyyaml>=6
+certifi
+playwright>=1.45
+gspread>=6
+google-auth>=2
+requests>=2
+pytest>=8

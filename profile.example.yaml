@@ -1,0 +1,33 @@
+# Copy to profile.yaml and fill in. profile.yaml is gitignored; it is the only file that knows who you are.
+
+name: Alex Rivera
+pdf_prefix: Alex_Rivera                 # PDFs are named <pdf_prefix>_<Company>_<Role>.pdf
+email_to: alex.rivera@example.edu       # where the nightly digest goes (sent from your own Gmail via the Claude connector)
+
+# Optional: POST {"message": "...", "text": "..."} here when a night fails (Poke, Slack incoming webhook, ntfy, ...).
+alert_webhook_url: ""
+alert_webhook_token_file: ""            # file holding a bearer token, if the webhook needs one
+
+# Optional Google Sheet tracker (see setup/google.md). Leave empty to skip.
+sheet_id: ""
+# Optional Drive uploads of the PDFs. Needs your own OAuth client; leave empty to skip (PDFs stay local).
+drive_folder_id: ""
+
+# Who you are, for the ranking model. It reads this, the posting titles, and the first 1,500
+# characters of each job description, then picks the nights' most valuable postings for YOU.
+# Be concrete: school, year, target term, what you can honestly clear, what you cannot.
+summary: |
+  State University, B.S. Computer Science, second year (graduation listed as May 2028).
+  Applying for **Summer 2027** internships. In-person, United States. No sponsorship needed.
+  Not eligible for MS/PhD/MBA-only roles.
+
+  Strengths, most to least relevant:
+  - Software engineering: two shipped web apps (React/TypeScript front end, Python/Postgres back end),
+    one summer SWE internship at a 40-person fintech startup (payments reconciliation service).
+  - Data: SQL-heavy analytics project for a campus org (dbt + Metabase), intro ML coursework.
+  - Product: led a 4-person team building a campus marketplace app; ran user interviews and a launch.
+
+# Extra rules the ranker should apply beyond the defaults in prompts/rank_prompt.md (optional).
+ranking_rules: |
+  - Bay Area or NYC is a plus, not a requirement.
+  - Skip roles that require embedded C, Verilog, or 3+ years of experience.
