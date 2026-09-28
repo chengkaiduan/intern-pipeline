@@ -13,3 +13,6 @@ __pycache__/
 .pytest_cache/
 .DS_Store
 .playwright-mcp/
+
+# resume/jobs may be a symlink to wherever your job dirs live
+resume/jobs
