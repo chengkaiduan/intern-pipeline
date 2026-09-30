@@ -1,5 +1,5 @@
 #!/bin/zsh -l
-# Nightly internship pipeline. usage: run.sh [--dry] [--max N] [--date YYYY-MM-DD]
+# Nightly internship pipeline. usage: run.sh [--dry] [--max N] [--since-hours H] [--date YYYY-MM-DD]
 #   --dry   scan + fetch + rank only; no tailoring, no sheet, no email, no state change
 #
 # Steps: scan → fetch JDs → rank → tailor loop → desktop folder → drive upload → sheet → email → mark seen.
@@ -11,11 +11,12 @@ ROOT="$PWD"
 export PATH="$PATH:$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin"   # append: keep the login shell's python3 first
 export SSL_CERT_FILE="$(python3 -m certifi 2>/dev/null)"   # framework Python on macOS ships no CA bundle
 
-DRY=0; MAX=""; DATE="$(date +%F)"
+DRY=0; MAX=""; SINCE=""; DATE="$(date +%F)"
 while [ $# -gt 0 ]; do
   case "$1" in
     --dry) DRY=1 ;;
     --max) MAX="$2"; shift ;;
+    --since-hours) SINCE="$2"; shift ;;
     --date) DATE="$2"; shift ;;
     *) echo "unknown arg $1" >&2; exit 2 ;;
   esac
@@ -46,9 +47,18 @@ python3 -c "from settings import settings; settings()" || exit 2   # loud failur
 echo "=== run $DATE start $(date) dry=$DRY max=${MAX:-cfg} ===" >>"$LOG"
 
 # 1. scan
-python3 scan.py --out "$RUN/candidates.json" >>"$LOG" 2>&1 || fatal "scan"
+SCAN_ARGS=(--out "$RUN/candidates.json")
+[ -n "$SINCE" ] && SCAN_ARGS+=(--since-hours "$SINCE")
+python3 scan.py "${SCAN_ARGS[@]}" >>"$LOG" 2>&1 || fatal "scan"
 NCAND=$(python3 -c "import json;print(len(json.load(open('$RUN/candidates.json'))))")
 log "scan: $NCAND candidates"
+
+# 1b. optional extra sources (never fatal)
+if [ -n "$(setting instagram_source)" ]; then
+  with_timeout 900 python3 sources/zero2sudo.py --merge "$RUN/candidates.json" --work-dir "$RUN/ig" >>"$LOG" 2>&1 || log "instagram source exited $? (continuing)"
+  NCAND=$(python3 -c "import json;print(len(json.load(open('$RUN/candidates.json'))))")
+  log "with instagram: $NCAND candidates"
+fi
 
 # 2. fetch JDs (never fatal; failures become link-only)
 if [ "$NCAND" -gt 0 ]; then

@@ -51,9 +51,10 @@ def build_rank_input(cands, cfg) -> str:
         else:
             jd = "JD: unavailable"
         terms = ", ".join(c.get("terms") or []) or "unspecified"
+        src = f" | source: {c['source']}" if c.get("source") else ""
         blocks.append(
             f"### {i}. {c['company']} — {c['title']} [{_tier(c['company'], cfg)}]\n"
-            f"slug: {c['slug']}\nlocations: {', '.join(c.get('locations') or [])} | category: {c.get('category')} | terms: {terms}\n"
+            f"slug: {c['slug']}\nlocations: {', '.join(c.get('locations') or [])} | category: {c.get('category')} | terms: {terms}{src}\n"
             f"url: {c.get('url')}\n{jd}\n"
         )
     return "\n".join(blocks)

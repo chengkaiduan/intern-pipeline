@@ -8,6 +8,9 @@ email_to: alex.rivera@example.edu       # where the nightly digest goes (sent fr
 alert_webhook_url: ""
 alert_webhook_token_file: ""            # file holding a bearer token, if the webhook needs one
 
+# Optional: Instagram account whose stories/highlights repost internships (see setup/instagram.md). Empty = off.
+instagram_source: ""
+
 # Optional Google Sheet tracker (see setup/google.md). Leave empty to skip.
 sheet_id: ""
 # Optional Drive uploads of the PDFs. Needs your own OAuth client; leave empty to skip (PDFs stay local).
